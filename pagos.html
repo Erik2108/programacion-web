@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploravia Pagos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        /*BARRA DE NAVEGACION PRINCIPAL*/
+        /*boton para volver a inicio*/
+ .btn-volver {
+    position: absolute;
+    left: -5%; /* Ajusta según el padding del container */
+    background: transparent !important;
+    border: none !important;
+    padding: 0.25rem;
+    z-index: 1000;
+}
+
+.btn-volver:hover {
+    transform: translateX(-3px); /* Efecto de movimiento */
+}
+
+/* Mostrar solo en páginas secundarias (ej: pagos.html) */
+body.pagos .btn-volver {
+    display: inline-block !important;
+}
+/*estilos para la barra de navegacion principal*/
+        .navbar-custom {
+            background: linear-gradient(135deg, #045bfc, #e20808);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        /* Estilos para el botón de login*/
+        .btn-outline-light[style*="border: none"] {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            color: white;
+            transition: all 0.3s ease;
+            padding: 0.375rem 0.75rem;
+            margin-left: 0.5rem;
+        }
+        
+        .btn-outline-light[style*="border: none"]:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+        
+        /* Efecto para los items del menú */
+        .navbar-custom .nav-link {
+            position: relative;
+            padding: 0.5rem 1rem;
+            margin: 0 0.2rem;
+        }
+        
+        .navbar-custom .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+        
+        .navbar-custom .nav-link:hover::after,
+        .navbar-custom .nav-link.active::after {
+            width: 70%;
+        }
+    
+         /* AJUSTE DEL BOTON DE BUSQUEDA DINAMICO*/
+         .search-container {
+            position: relative;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input {
+            width: 0;
+            opacity: 0;
+            padding: 0;
+            border: none;
+            transition: all 0.3s ease;
+            position: absolute;
+            right: 40px; /* Ajusta según el tamaño deL botón */
+        }
+        
+        .search-input.active {
+            width: 200px; /* Ancho deseado del campo */
+            opacity: 1;
+            padding: 0.375rem 0.75rem;
+            border: 1px solid #ced4da;
+        }
+        
+        .search-button {
+            border: none !important;
+            transition: all 0.3s ease;
+        }
+        
+        .search-button:hover {
+            transform: scale(1.1);
+        }
+
+
+/* HEADER*/
+            * {
+               margin: 0;
+               padding: 0;
+               box-sizing: border-box;
+           }
+    
+           .pagos {
+               font-family: 'Arial', sans-serif;
+               margin: 0;
+           }
+    
+           header {
+               background: #ffffff;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+               position: sticky;
+    
+               z-index: 1000;
+           }
+    
+           .header-content {
+           display: flex;
+           flex-direction: column;
+           align-items: center; /* Centra horizontalmente los elementos */
+       }
+
+       .header-img {
+           width: 200px;
+           height: auto;
+           margin-top: 20px;   
+           margin-bottom: 15px; /* Espacio entre logo y menú */
+       }
+    
+           .menu {
+               list-style: none;
+               display: flex;
+               justify-content: center;
+               gap: 2.5rem;
+           }
+    
+           .menu a {
+               text-decoration: none;
+               color: #34495e;
+               font-size: 1rem;
+               font-weight: 500;
+               transition: all 0.3s ease;
+               padding: 0.5rem 1rem;
+               border-radius: 4px;
+           }
+    
+           .menu a:hover {
+               color: #ffffff;
+               background: #3498db;
+           }
+           
+.destino-header {
+    position: relative;
+    height: 250px; /* Aumenté la altura para mejor visualización */
+    background-size: cover;
+    background-position: center;
+    background-attachment: local; /* Efecto parallax suave */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alineación izquierda (más profesional) */
+    margin: 0 -15px 2rem -15px; /* Margen negativo para ancho completo */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Oculta exceso de imagen */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Capa oscura con gradiente (mejor que opacity plana) */
+.destino-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg, 
+        rgba(0, 0, 0, 0.6) 0%, 
+        rgba(0, 0, 0, 0.3) 100%
+    );
+}
+
+/* Estilo del título */
+.destino-titulo {
+    position: relative;
+    color: white;
+    font-size: 2.8rem; /* Tamaño ligeramente reducido */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Sombra más pronunciada */
+    z-index: 1;
+    padding: 0 2rem; /* Espaciado horizontal */
+    width: 100%;
+    line-height: 1.2; /* Mejor interlineado */
+    font-weight: 700; /* Negrita */
+}
+
+/*TITULO CON FONDO DE IMAGEN*/
+.titulo-con-fondo {
+    text-align: left;
+    padding-left: 100px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    width: 100vw; /* Ocupa el 100% del ancho de la ventana */
+    left: 50%; /* Centrado horizontal */
+    transform: translateX(-50%); /* Ajuste fino para centrado */
+    margin: 0 0 20px 0; /* Elimina márgenes horizontales, solo conservé el inferior */
+    border-radius: 0; /* Elimina bordes redondeados para coincidir con el diseño de borde a borde */
+}
+
+.titulo-con-fondo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+}
+
+#titulo-destino {
+    position: relative;
+    z-index: 2;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+    padding-left: 20px;
+    width: 100%;
+}
+
+
+/*ESTILO DEL FUNCIONAMIENTO DE LOS PAGOS*/
+/* Estilos para las tarjetas de vuelo */
+.vuelo-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.vuelo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Estilo para el panel de administrador */
+#admin-controls {
+    border-left: 4px solid #0d6efd;
+}
+
+/* Mejora de responsive */
+@media (max-width: 768px) {
+    .vuelo-card {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/*FOOTER*/
+footer {
+  background-color: #f5efef;
+  width: 100%;     
+  margin: 0;
+  padding: 20px 0;   
+}
+
+</style>
+</head>
+<body class="pagos">
+
+  <!--HEADER 1-->
+    <header>
+        <div class="header-content">
+            <img class="header-img" alt="Logo" src="C:\Users\Admin\Downloads\ExploraviaIMG.jpeg">
+            <nav>
+                <ul class="menu">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="#">Empresas</a></li>
+                    <li><a href="#">Inspirate</a></li>
+                    <li><a href="#">Ayuda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+  <!--HEADER 2-->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container position-relative">
+            <a href="pagina.html" class="btn-volver">
+                <i class="fas fa-arrow-left text-white fs-4"></i>
+            </a>
+            <a class="navbar-brand" href="#">
+                <span class="fw-bold">Exploravia</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Vuelos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Destinos</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Norteamerica</a></li>
+                            <li><a class="dropdown-item" href="#">Suramerica</a></li>
+                            <li><a class="dropdown-item" href="#">Europa</a></li>
+                            <li><a class="dropdown-item" href="#">Asia</a></li>
+                            <li><a class="dropdown-item" href="#">Africa</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Paquetes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ofertas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vuelo y Hotel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Reservas</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-2 search-container">
+                    <input class="form-control search-input" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-light search-button" type="button"><i class="fas fa-search"></i></button>
+                </form>
+                <button class="btn btn-outline-light" style="border: none" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fas fa-user me-1"></i> Ingresar
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!--CUADROS DE DESTINOS-->
+    <div class="container">
+        <!-- Contenedor del título con imagen de fondo -->
+        <div class="titulo-con-fondo" id="fondo-titulo">
+            <h1 id="titulo-destino" class="text-white py-4 px-3"></h1>
+        </div>
+        <p id="descripcion" class="mt-4" style="font-size: 1.1rem"></p>
+        <h3 class="mb-4">Vuelos disponibles</h3>
+        
+        <div id="opciones-vuelo" class="row">
+            <!-- Las opciones de vuelo se generarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="container-fluid px-0">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="fw-bold mb-3">Exploravia</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Crear Cuenta</a></li>
+                        <li class="mb-2"><a href="#">Mi Cuenta</a></li>
+                        <li class="mb-2"><a href="#">Mis Viajes</a></li>
+                        <li class="mb-2"><a href="#">Mi Perfil</a></li>
+                        <li class="mb-2"><a href="#">Eliminar mi cuenta</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="fw-bold mb-3">Sobre Nosotros</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Confianza en tus compras</a></li>
+                        <li class="mb-2"><a href="#">Términos y condiciones</a></li>
+                        <li class="mb-2"><a href="#">Política de privacidad</a></li>
+                        <li class="mb-2"><a href="#">Promociones vigentes</a></li>
+                        <li class="mb-2"><a href="#">Condiciones IVA</a></li>
+                        <li class="mb-2"><a href="#">Black Friday</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-3">Información Adicional</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Potencia tu negocio</a></li>
+                        <li class="mb-2"><a href="#">Agrega tu flota</a></li>
+                        <li class="mb-2"><a href="#">Programa de Agencias</a></li>
+                        <li class="mb-2"><a href="#">Afiliadas</a></li>
+                        <li class="mb-2"><a href="#">Anuncia tu propiedad</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold mb-3">Contactanos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Calle 12 3456, Bogotá</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +57 601 456 7890</li>
+                        <li class="mb-2"><i class="fab fa-whatsapp me-2"></i>+57 300 456 7890</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@exploravia.com.co</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.2);">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">Exploravia &copy; </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="#" class="text-black">Términos y Condiciones</a></li>
+                        <li class="list-inline-item mx-3">|</li>
+                        <li class="list-inline-item"><a href="#" class="text-black">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--LOGIN-->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-black">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" placeholder="Dirección de correo electronico" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label text-black">Contraseña</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Recordarme</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p class="my-3">o</p>
+                        <div class="d-grid gap-2"style="max-width: 250px; margin: 0 auto;">
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fab fa-google me-4"></i>Continuar con google</button>
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fab fa-microsoft me-4"></i>Continuar con Microsoft</button>
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fab fa-apple me-4"></i>Continuar con Apple</button>
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fas fa-phone me-4"></i>Continuar con el Telefono</button> 
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="text-center">
+                        <p class="mb-0">¿No tienes una cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Regístrate</a></p>
+                        <p class="mt-2"><a href="#">¿Olvidaste tu contraseña?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        //BOTON DE VOLVER AL INICIO
+        document.body.classList.add('pagos.html');
+        // BOTON DE BUSCAR
+    document.querySelector('.search-button').addEventListener('click', function() {
+        const searchInput = document.querySelector('.search-input');
+        searchInput.classList.toggle('active');
+        
+        // Enfocar el campo cuando se activa
+        if (searchInput.classList.contains('active')) {
+            searchInput.focus();
+        }
+    });
+
+    //DESTINOS INDIVIDUALES
+    const urlParams = new URLSearchParams(window.location.search);
+const destino = urlParams.get('destino');
+const imagenesDestinos = {
+    "cartagena": "https://media.staticontent.com/media/pictures/9495889e-54f9-40d2-939d-b04bf30b47c7",
+    "san-andres": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/24/88/76/decameron-aquarium.jpg",
+    "medellin": "https://forbes.co/_next/image?url=https%3A%2F%2Fcdn.forbes.co%2F2020%2F09%2FMedell%C3%ADn-foto-ProColombia.jpg&w=3840&q=75",
+    "madrid": "https://denomades-blog.imgix.net/blog/wp-content/uploads/2023/11/27150312/granvia.jpg",
+    "nueva-york": "https://www.travel-guide.es/media/new-york.jpeg",
+    "cancun": "https://www.economy.com.bo/asset/thumbnail,992,558,center,center/media/economy/images/2022/09/27/2022092716155612569.jpg"
+};
+
+if (destino) {
+    // Aplicar imagen de fondo
+    if (imagenesDestinos[destino]) {
+        document.getElementById('fondo-titulo').style.backgroundImage = `url(${imagenesDestinos[destino]})`;
+    }
+// Mostrar contenido según el destino
+if (destino === "cartagena") {
+    document.getElementById("titulo-destino").textContent = "Viaja a Cartagena de Indias";
+    document.getElementById("descripcion").textContent = "Esta joya colonial a orillas del Caribe colombiano deslumbra con su ciudad amurallada, declarada Patrimonio de la Humanidad por la UNESCO. Sus coloridas calles empedradas, balcones floridos y una rica historia de piratas y fortalezas evocan un ambiente mágico. Además de su encanto histórico, Cartagena ofrece una vibrante vida nocturna, exquisita gastronomía y la calidez de su gente, convirtiéndola en un destino inolvidable.";
+} else if (destino === "san-andres") {
+    document.getElementById("titulo-destino").textContent = "Viaja a San Andres";
+    document.getElementById("descripcion").textContent = "Este archipiélago caribeño colombiano es un paraíso tropical famoso por su mar de los siete colores, una asombrosa variedad de tonalidades azules y verdes. Con playas de arena blanca, extensos arrecifes de coral y una atmósfera relajada, San Andrés es ideal para el buceo, el snorkel y disfrutar de la cultura raizal única de la isla. Su ambiente festivo y la belleza natural lo convierten en un destino caribeño por excelencia.";
+} else if (destino === "medellin") {
+    document.getElementById("titulo-destino").textContent = "Viaja a Medellín";
+    document.getElementById("descripcion").textContent = "Enclavada en un valle rodeado de montañas, Medellín, conocida como la Ciudad de la Eterna Primavera por su clima agradable, ha experimentado una notable transformación. Moderna y vibrante, ofrece una mezcla de cultura, innovación y naturaleza. Desde el arte urbano de la Comuna 13 hasta los tranquilos jardines botánicos y la animada vida nocturna de El Poblado, Medellín sorprende a sus visitantes con su espíritu emprendedor y su gente amable.";
+} else if (destino === "madrid") {
+    document.getElementById("titulo-destino").textContent = "Viaja a Madrid";
+    document.getElementById("descripcion").textContent = "La capital de España es una metrópolis cosmopolita que combina una rica historia con una energía contemporánea. Sus majestuosos palacios, museos de renombre mundial como el Prado y el Reina Sofía, y sus animadas plazas como la Puerta del Sol y la Plaza Mayor son solo algunos de sus atractivos. Madrid también es famosa por su tapeo, su pasión por el fútbol y una vida nocturna que se extiende hasta altas horas de la madrugada.";
+} else if (destino === "nueva-york") {
+    document.getElementById("titulo-destino").textContent = "Viaja a Nueva York";
+    document.getElementById("descripcion").textContent = "La Gran Manzana es un ícono global, una ciudad de rascacielos imponentes, diversidad cultural y un ritmo de vida frenético. Cada uno de sus cinco distritos ofrece una experiencia única, desde los teatros de Broadway y los museos de clase mundial de Manhattan hasta el ambiente bohemio de Brooklyn y la tranquilidad de Staten Island. Nueva York es un centro de finanzas, moda, arte y gastronomía que nunca deja de sorprender.";
+} else if (destino === "cancun") {
+    document.getElementById("titulo-destino").textContent = "Viaja a Cancún";
+    document.getElementById("descripcion").textContent = "Este destino turístico de fama mundial en la península de Yucatán es célebre por sus playas de arena blanca, aguas turquesas y una animada vida nocturna. Además de sus resorts de lujo y su ambiente festivo, Cancún ofrece fácil acceso a impresionantes sitios arqueológicos mayas como Chichén Itzá y Tulum, así como a parques ecológicos y una rica biodiversidad marina en la cercana Riviera Maya.";
+}
+
+}
+
+//FUNCIONAMIENTO DE LA PAGINA PAGOS
+
+const vuelosDisponibles = {
+    "cartagena": [
+        {
+            id: "ctg001",
+            aerolinea: "JetsMART",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Cartagena", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Cartagena - Bogotá", tipo: "Directo" },
+            precio: 300000,
+            comentario: ""
+        },
+        {
+            id: "ctg002",
+            aerolinea: "JetsMART", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Cartagena", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Cartagena - Bogotá", tipo: "Directo" },
+            precio: 300000,
+            comentario: ""
+        },
+        {
+            id: "ctg003",
+            aerolinea: "Avianca",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Cartagena", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Cartagena - Bogotá", tipo: "Directo" },
+            precio: 400000,
+            comentario: ""
+        },
+        {
+            id: "ctg004",
+            aerolinea: "Avianca", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Cartagena", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Cartagena - Bogotá", tipo: "Directo" },
+            precio: 400000,
+            comentario: ""
+        },
+        {
+            id: "ctg005",
+            aerolinea: "LATAM",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Cartagena", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Cartagena - Bogotá", tipo: "Directo" },
+            precio: 500000,
+            comentario: ""
+        },
+        {
+            id: "ctg006",
+            aerolinea: "LATAM", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Cartagena", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Cartagena - Bogotá", tipo: "Directo" },
+            precio: 500000,
+            comentario: ""
+        } 
+    ],
+
+    "san-andres": [
+        {
+            id: "adz001",
+            aerolinea: "JetsMART",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - San Andrés", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "San Andrés - Bogotá", tipo: "Directo" },
+            precio: 700000,
+            comentario: ""
+        },
+        {
+            id: "adz002",
+            aerolinea: "JetsMART", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - San Andrés", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "San Andrés - Bogotá", tipo: "Directo" },
+            precio: 700000,
+            comentario: ""
+        },
+        {
+            id: "adz003",
+            aerolinea: "Avianca",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - San Andrés", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "San Andrés - Bogotá", tipo: "Directo" },
+            precio: 800000,
+            comentario: ""
+        },
+        {
+            id: "adz004",
+            aerolinea: "Avianca", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - San Andrés", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "San Andrés - Bogotá", tipo: "Directo" },
+            precio: 800000,
+            comentario: ""
+        },
+        {
+            id: "adz005",
+            aerolinea: "LATAM",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - San Andrés", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "San Andrés - Bogotá", tipo: "Directo" },
+            precio: 900000,
+            comentario: ""
+        },
+        {
+            id: "adz006",
+            aerolinea: "LATAM", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - San Andrés", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "San Andrés - Bogotá", tipo: "Directo" },
+            precio: 900000,
+            comentario: ""
+        } 
+    ],
+
+    "medellin": [
+        {
+            id: "mde001",
+            aerolinea: "JetsMART",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Medellín", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Medellín - Bogotá", tipo: "Directo" },
+            precio: 300000,
+            comentario: ""
+        },
+        {
+            id: "mde002",
+            aerolinea: "JetsMART", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Medellín", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Medellín - Bogotá", tipo: "Directo" },
+            precio: 300000,
+            comentario: ""
+        },
+        {
+            id: "mde003",
+            aerolinea: "Avianca",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Medellín", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Medellín - Bogotá", tipo: "Directo" },
+            precio: 400000,
+            comentario: ""
+        },
+        {
+            id: "mde004",
+            aerolinea: "Avianca", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Medellín", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Medellín - Bogotá", tipo: "Directo" },
+            precio: 400000,
+            comentario: ""
+        },
+        {
+            id: "mde005",
+            aerolinea: "LATAM",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Medellín", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Medellín - Bogotá", tipo: "Directo" },
+            precio: 500000,
+            comentario: ""
+        },
+        {
+            id: "adz006",
+            aerolinea: "LATAM", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Medellín", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Medellín - Bogotá", tipo: "Directo" },
+            precio: 500000,
+            comentario: ""
+        } 
+    ],
+
+    "madrid": [
+        {
+            id: "mad001",
+            aerolinea: "Air Europa",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Madrid", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Madrid - Bogotá", tipo: "Directo" },
+            precio: 3400000,
+            comentario: ""
+        },
+        {
+            id: "mad002",
+            aerolinea: "Air Europa", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Madrid", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Madrid - Bogotá", tipo: "Directo" },
+            precio: 3400000,
+            comentario: ""
+        },
+        {
+            id: "mad003",
+            aerolinea: "Avianca",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Madrid", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Madrid - Bogotá", tipo: "Directo" },
+            precio: 3500000,
+            comentario: ""
+        },
+        {
+            id: "mad004",
+            aerolinea: "Avianca", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Madrid", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Madrid - Bogotá", tipo: "Directo" },
+            precio: 3500000,
+            comentario: ""
+        },
+        {
+            id: "mad005",
+            aerolinea: "Iberia",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Madrid", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Madrid - Bogotá", tipo: "Directo" },
+            precio: 3600000,
+            comentario: ""
+        },
+        {
+            id: "mad006",
+            aerolinea: "Iberia", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Madrid", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Madrid - Bogotá", tipo: "Directo" },
+            precio: 3600000,
+            comentario: ""
+        } 
+    ],
+
+    "nueva-york": [
+        {
+            id: "jfk001",
+            aerolinea: "Avianca",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:15", ruta: "Bogotá - Nueva York", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:01", ruta: "Nueva York - Bogotá", tipo: "Directo" },
+            precio: 2300000,
+            comentario: ""
+        },
+        {
+            id: "jfk002",
+            aerolinea: "Avianca", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "05:00", ruta: "Bogotá - Nueva York", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:01", ruta: "Nueva York - Bogotá", tipo: "Directo" },
+            precio: 2300000,
+            comentario: ""
+        },
+        {
+            id: "jfk003",
+            aerolinea: "United Airlines",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Nueva York", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Nueva York - Bogotá", tipo: "Directo" },
+            precio: 2400000,
+            comentario: ""
+        },
+        {
+            id: "jfk004",
+            aerolinea: "United Airlines", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Nueva York", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Nueva York - Bogotá", tipo: "Directo" },
+            precio: 2400000,
+            comentario: ""
+        },
+        {
+            id: "jfk005",
+            aerolinea: "American Airlines",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Nueva York", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Nueva York - Bogotá", tipo: "Directo" },
+            precio: 2500000,
+            comentario: ""
+        },
+        {
+            id: "jfk006",
+            aerolinea: "American Airlines", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Nueva York", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Nueva York - Bogotá", tipo: "Directo" },
+            precio: 2500000,
+            comentario: ""
+        } 
+    ],
+    "cancun": [
+        {
+            id: "cun001",
+            aerolinea: "Wingo",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Cancún", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Cancún - Bogotá", tipo: "Directo" },
+            precio: 1300000,
+            comentario: ""
+        },
+        {
+            id: "cun002",
+            aerolinea: "Wingo", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Cancún", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Cancún - Bogotá", tipo: "Directo" },
+            precio: 1300000,
+            comentario: ""
+        },
+        {
+            id: "cun003",
+            aerolinea: "Avianca",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Cancún", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Cancún - Bogotá", tipo: "Directo" },
+            precio: 1500000,
+            comentario: ""
+        },
+        {
+            id: "cun004",
+            aerolinea: "Avianca", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Cancún", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Cancún - Bogotá", tipo: "Directo" },
+            precio: 1500000,
+            comentario: ""
+        },
+        {
+            id: "cun005",
+            aerolinea: "United Airlines",
+            ida: { fecha: "Lun. 9 jun. 2025", hora: "19:00", ruta: "Bogotá - Cancún", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "07:00", ruta: "Cancún - Bogotá", tipo: "Directo" },
+            precio: 1600000,
+            comentario: ""
+        },
+        {
+            id: "cun006",
+            aerolinea: "United Airlines", 
+            ida: { fecha: "Mar. 10 jun. 2025", hora: "12:00", ruta: "Bogotá - Cancún", tipo: "Directo" },
+            regreso: { fecha: "Jue. 12 jun. 2025", hora: "15:00", ruta: "Cancún - Bogotá", tipo: "Directo" },
+            precio: 1600000,
+            comentario: ""
+        } 
+    ],
+};
+
+// Mostrar opciones de vuelo
+function mostrarVuelos(destino) {
+    const vuelos = vuelosDisponibles[destino] || [];
+    const contenedor = document.getElementById('opciones-vuelo');
+    contenedor.innerHTML = '';
+    const esAdmin = localStorage.getItem('esAdmin') === 'true';
+
+    vuelos.forEach(vuelo => {
+        const precioFormateado = new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP'
+        }).format(vuelo.precio).replace(/,00$/, '');
+        
+        const vueloHTML = `
+<div class="col-md-6 mb-4">
+    <div class="card shadow-sm h-100 vuelo-card" data-id="${vuelo.id}">
+        <div class="card-body">
+            ${esAdmin ? `
+            <div class="admin-edit-buttons text-end mb-2">
+                <button class="btn btn-sm btn-outline-primary edit-vuelo" data-vuelo-id="${vuelo.id}">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+            </div>` : ''}
+            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">${vuelo.aerolinea}</h5>
+                <span class="badge bg-info">${vuelo.ida.tipo}</span>
+            </div>
+
+                
+                <div class="row mb-3">
+                    <div class="col">
+                        <p class="mb-1 text-muted">IDA</p>
+                        <p class="mb-1 fw-bold">${vuelo.ida.ruta}</p>
+                        <p class="mb-0">${vuelo.ida.fecha}<br>${vuelo.ida.hora}</p>
+                    </div>
+                    <div class="col">
+                        <p class="mb-1 text-muted">REGRESO</p>
+                        <p class="mb-1 fw-bold">${vuelo.regreso.ruta}</p>
+                        <p class="mb-0">${vuelo.regreso.fecha}<br>${vuelo.regreso.hora}</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0 fs-5 fw-bold">${precioFormateado}</p>
+                    <button class="btn btn-primary btn-sm seleccionar-vuelo">Seleccionar</button>
+                </div>
+                
+                ${vuelo.comentario ? `<div class="alert alert-warning mt-3 mb-0 p-2">${vuelo.comentario}</div>` : ''}
+            </div>
+        </div>
+    </div>
+    `;
+    
+    contenedor.insertAdjacentHTML('beforeend', vueloHTML);
+    const btnSeleccionar = contenedor.lastElementChild.querySelector('.seleccionar-vuelo');
+        btnSeleccionar.addEventListener('click', function() {
+            guardarVueloSeleccionado(destino, vuelo.id);
+            alert('Vuelo seleccionado. Será visible en tu página principal.');
+            window.location.href = 'pagina.html';
+        });
+
+});
+
+// En caso de ser admin
+if (esAdmin) {
+        document.querySelectorAll('.edit-vuelo').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const vueloId = this.getAttribute('data-vuelo-id');
+                editarVuelo(destino, vueloId);
+            });
+        });
+    }
+}
+
+// Editar vuelos Admin
+function editarVuelo(destino, vueloId) {
+    const vuelos = vuelosDisponibles[destino];
+    const vuelo = vuelos.find(v => v.id === vueloId);
+    
+    if (!vuelo) return;
+
+    // Crear un formulario de edición
+    const nuevoComentario = prompt("Nuevo comentario:", vuelo.comentario || "");
+    const nuevoPrecio = prompt("Nuevo precio (COP):", vuelo.precio);
+    const nuevaHoraIda = prompt("Nueva hora de ida (HH:MM):", vuelo.ida.hora);
+    const nuevaHoraRegreso = prompt("Nueva hora de regreso (HH:MM):", vuelo.regreso.hora);
+
+    // Actualizar los valores si el admin ingresó datos
+    if (nuevoComentario !== null) vuelo.comentario = nuevoComentario;
+    if (nuevoPrecio !== null) vuelo.precio = Number(nuevoPrecio);
+    if (nuevaHoraIda !== null) vuelo.ida.hora = nuevaHoraIda;
+    if (nuevaHoraRegreso !== null) vuelo.regreso.hora = nuevaHoraRegreso;
+
+
+    // Recargar la vista
+    mostrarVuelos(destino);
+    alert("Cambios guardados");
+}
+
+
+
+    // Eventos para seleccionar vuelo
+    document.querySelectorAll('.seleccionar-vuelo').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.vuelo-card');
+            const vueloId = card.getAttribute('data-id');
+            guardarVueloSeleccionado(destino, vueloId);
+            alert('Vuelo seleccionado. Será visible en tu página principal.');
+            window.location.href = 'pagina.html';
+        });
+    });
+
+// Guardar vuelo seleccionado
+function guardarVueloSeleccionado(destino, vueloId) {
+    const vuelos = vuelosDisponibles[destino] || [];
+    const vuelo = vuelos.find(v => v.id === vueloId);
+    
+    if (vuelo) {
+        localStorage.setItem('vueloSeleccionado', JSON.stringify({
+            destino,
+            ...vuelo
+        }));
+    }
+}
+
+// Verificar si es administrador
+function verificarAdmin() {
+    const esAdmin = localStorage.getItem('esAdmin') === 'true';
+    if (esAdmin) {
+        document.getElementById('admin-controls').classList.remove('d-none');
+        
+        // Control para activar/desactivar el modo edición
+        document.getElementById('toggle-edit-mode').addEventListener('change', function() {
+            const editButtons = document.querySelectorAll('.edit-vuelo');
+            editButtons.forEach(btn => {
+                btn.style.display = this.checked ? 'inline-block' : 'none';
+            });
+        });
+    }
+}
+
+// Al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const destino = urlParams.get('destino');
+    
+    if (destino) {
+        mostrarVuelos(destino);
+        verificarAdmin();
+    }
+});
+
+//LOGIN ADMINISTRADOR
+document.querySelector('#loginModal form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (email === 'administrador@gmail.com' && password === '12345') {
+        localStorage.setItem('esAdmin', 'true');
+        alert('Bienvenido, Administrador');
+        window.location.href = 'pagina.html';
+    } else if (email === 'usuario@jj.com' && password === '12345') {
+        localStorage.setItem('esAdmin', 'false'); // Limpia el estado de admin
+        window.location.href = 'pagina.html';
+}});
+
+
+        //BOOTSTRAP
+        $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
+            // Add smooth scrolling to all links
+            $("a").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

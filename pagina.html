@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploravia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+
+    /* Estilos para la barra de navegación principal */
+    .navbar-custom {
+        background: linear-gradient(135deg, #045bfc, #e20808);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    /* Estilos para el botón de login*/
+    .btn-outline-light[style*="border: none"] {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        color: white;
+        transition: all 0.3s ease;
+        padding: 0.375rem 0.75rem;
+        margin-left: 0.5rem;
+    }
+    
+    .btn-outline-light[style*="border: none"]:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
+    }
+    
+    /* Efecto para los items del menú */
+    .navbar-custom .nav-link {
+        position: relative;
+        padding: 0.5rem 1rem;
+        margin: 0 0.2rem;
+    }
+    
+    .navbar-custom .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: all 0.3s;
+        transform: translateX(-50%);
+    }
+    
+    .navbar-custom .nav-link:hover::after,
+    .navbar-custom .nav-link.active::after {
+        width: 70%;
+    }
+
+    /* HEADER*/
+
+       body {
+           font-family: 'Arial', sans-serif;
+       }
+
+       .menu {
+           list-style: none;
+           display: flex;
+           justify-content: center;
+           gap: 2.5rem;
+       }
+
+       .menu a {
+           text-decoration: none;
+           color: #34495e;
+           font-size: 1rem;
+           font-weight: 500;
+           transition: all 0.3s ease;
+           padding: 0.5rem 1rem;
+           border-radius: 4px;
+       }
+
+       .menu a:hover {
+           color: #ffffff;
+           background: #3498db;
+       }
+
+        /* AJUSTE DEL BOTON DE BUSQUEDA DINAMICO*/
+    .search-container {
+        position: relative;
+        width: auto;
+        transition: all 0.3s ease;
+    }
+    
+    .search-input {
+        width: 0;
+        opacity: 0;
+        padding: 0;
+        border: none;
+        transition: all 0.3s ease;
+        position: absolute;
+        right: 40px; /* Ajusta según el tamaño deL botón */
+    }
+    
+    .search-input.active {
+        width: 200px; /* Ancho deseado del campo */
+        opacity: 1;
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #ced4da;
+    }
+    
+    .search-button {
+        border: none !important;
+        transition: all 0.3s ease;
+    }
+    
+    .search-button:hover {
+        transform: scale(1.1);
+    }
+
+    /*SECCION IMAGEN GRANDE*/
+    .principio { text-align: center; padding: 40px 20px; }
+    .principio .descubrir { position: relative; display: inline-block; }
+    .principio .descubrir img { max-width: 100%; height: auto; border-radius: 8px; }
+
+    .descubrir {
+    position: relative; /* Necesario para posicionar el botón */
+    display: inline-block; /* Ajusta al tamaño de la imagen */
+  }
+
+  .descubrir img {
+    display: block; /* Elimina espacio inferior de la imagen */
+    width: 100%; /* Ajusta al contenedor */
+    max-width: 1000px; /* Opcional: limita el ancho */
+  }
+
+  .btn-explora {
+    position: absolute;
+    bottom: 20px; /* Distancia desde abajo */
+    left: 16%; /* Centrado horizontal */
+    transform: translateX(-50%); /* Ajuste fino para centrar */
+    
+    /* Estilos modernos para el botón */
+    background: rgba(17,108,251,255); /* Fondo semi-transparente */
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px; /* Bordes redondeados */
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+
+  .btn-explora:hover {
+    background: rgba(17,108,251,255);
+    transform: translateX(-50%) scale(1.05); /* Efecto hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-explora::after {
+    margin-left: 8px;
+    transition: margin 0.3s;
+  }
+
+  .btn-explora:hover::after {
+    margin-left: 12px; /* Efecto de movimiento en la flecha */
+  }
+
+  /*SECCION DE LA FECHA*/
+  .booking-section {
+  position: relative;
+  overflow: hidden;
+}
+.booking-section .bg-image {
+  background: url('https://lopezdoriga.com/wp-content/uploads/2017/01/Hong-Kong.jpg') center/cover no-repeat;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.booking-section .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 2;
+}
+.booking-section .container {
+  z-index: 3;
+}
+.nav-tabs .nav-link {
+  color: #fff;
+  opacity: .8;
+}
+.nav-tabs .nav-link.active {
+  background: transparent;
+  border-color: transparent;
+  border-bottom: 2px solid #fff;
+  opacity: 1;
+}
+.form-label {
+  color: #eee;
+}
+.form-control,
+.form-select {
+  background: rgba(255,255,255,0.9);
+}
+.btn-danger {
+  background-color: #e30613;
+  border-color: #e30613;
+}
+
+/*ESTILO CUADROS DE SELECCION*/
+.destination-card {
+    overflow: hidden; /* Oculta cualquier contenido que sobresalga */
+    transition: all 0.3s ease; /* Suaviza la transición */
+}
+
+.destination-card:hover {
+    transform: translateY(-5px); /* Levanta ligeramente la tarjeta */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2) !important; /* Sombra más pronunciada */
+}
+
+/* Efecto zoom en la imagen */
+.destination-card img {
+    transition: all 0.5s ease; /* Transición más lenta para el zoom */
+}
+
+.destination-card:hover img {
+    transform: scale(1.05); /* Zoom del 5% */
+}
+/*ESTILO BOTON GRANDE DE CUADROS DE SELECCION*/
+.all-options {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.all-options button {
+    color: #ffff;
+    background-color: #045bfc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease; /* Agrega transición para efectos suaves */
+}
+.all-options button:hover {
+    background-color: #045bfc; /* Color más oscuro al hover */
+    transform: scale(1.05); /* Ligero zoom (opcional) */
+    box-shadow: 0 4px 12px rgba(4, 91, 252, 0.3); /* Sombra al hover */
+}
+.all-options .plus {
+    display: inline-block;
+    color: #fff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-left: 12px;
+    font-size: 1.5rem;
+}
+
+/*FOOTER*/
+footer {
+    background-color: #f5efef;
+  width: 100%;     
+  margin: 0;
+  padding: 20px 0;   
+}
+</style>
+</head>
+<body>
+
+  <!--HEADER 1-->
+    <header>
+        <div class="header-content">
+            <img class="header-img" alt="Logo" src="C:\Users\Admin\Downloads\ExploraviaIMG.jpeg">
+            <nav>
+                <ul class="menu">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Nosotros</a></li>
+                    <li><a href="#">Empresas</a></li>
+                    <li><a href="#">Inspirate</a></li>
+                    <li><a href="#">Ayuda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+  <!--HEADER 2-->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span class="fw-bold">Exploravia</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Vuelos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Paquetes</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Destinos</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Norteamerica</a></li>
+                            <li><a class="dropdown-item" href="#">Suramerica</a></li>
+                            <li><a class="dropdown-item" href="#">Europa</a></li>
+                            <li><a class="dropdown-item" href="#">Asia</a></li>
+                            <li><a class="dropdown-item" href="#">Africa</a></li>
+                            <li><a class="dropdown-item" href="#">Oceania</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ofertas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Vuelo y Hotel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Reservas</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-2 search-container">
+                    <input class="form-control search-input" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-light search-button" type="button"><i class="fas fa-search"></i></button>
+                </form>
+                <button class="btn btn-outline-light" style="border: none" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fas fa-user me-1"></i> Ingresar
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+ <!-- PRIMER TITULO -->
+    <div class="flag-bar">
+        <div class="flag-yellow"></div>
+        <div class="flag-blue"></div>
+        <div class="flag-red"></div>
+    </div>
+<div>
+    <p></p>
+</div>
+    <!-- Hero Section -->
+    <div class="hero-section text-center">
+        <div class="container">
+            <h2 class="display-4 fw-bold">¡Viaja al lugar de tus sueños!</h2>
+            <p class="lead mb-4">Descubre el mundo a tan solo un clic</p>
+        </div>
+    </div>
+<div>
+    <p></p>
+</div>
+
+
+<!-- SELECCION DE FECHA VIAJE -->
+<section class="booking-section position-relative text-white">
+    <!-- Fondo de sección -->
+    <div class="bg-image"></div>
+    <!-- Capa oscura -->
+    <div class="overlay"></div>
+  
+    <div class="container py-5 position-relative">
+  
+
+  
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="vuelo-hotel" role="tabpanel">
+          <form class="row g-3">
+            <div class="col-md-3">
+              <label for="origen" class="form-label">Origen</label>
+              <input type="text" id="origen" class="form-control" placeholder="Ciudad de origen">
+            </div>
+            <div class="col-md-3">
+              <label for="destino" class="form-label">Destino</label>
+              <input type="text" id="destino" class="form-control" placeholder="Ciudad de destino">
+            </div>
+            <div class="col-md-2">
+              <label for="ida" class="form-label">Ida</label>
+              <input type="date" id="ida" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label for="regreso" class="form-label">Regreso</label>
+              <input type="date" id="regreso" class="form-control">
+            </div>
+            <div class="col-md-2">
+              <label for="habitaciones" class="form-label">Clase</label>
+              <select id="habitaciones" class="form-select">
+
+                <option>Económica</option>
+                <option>Premium Economy</option>
+                <option>Ejecutiva/Business</option>
+                <option>Primera Clase</option>
+                <option>Premium Business</option>
+                <option>Premium Primera clase</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="traslado" value="1">
+                <label class="form-check-label" for="traslado">Incluir fechas con Ofertas</label>
+              </div>
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-danger px-4">Buscar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!--CARTA AL ELEGIR EL VUELO-->
+    <div id="mi-vuelo" class="container mt-4 mb-5" style="display: none;">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-plane me-2"></i>Mi Próximo Viaje</h4>
+            </div>
+            <div class="card-body" id="vuelo-seleccionado-container">
+                <!-- El vuelo seleccionado aparecerá aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- IMAGEN GRANDE MAS BOTON -->
+    <div class="container">
+       
+        <section class="principio">
+            <div class="descubrir">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Concha en la arena al atardecer">
+              <button class="btn-explora">Explora nuestras ofertas <i class="fas fa-arrow-right ms-1"></i></button>
+            </div>
+          </section>
+        
+    <!-- SELECCION DE PAISES -->
+        <section class="mb-5">
+            <h2 class="section-title">Destinos Destacados</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card destination-card h-100 shadow-sm">
+                        <img src="https://media.staticontent.com/media/pictures/9495889e-54f9-40d2-939d-b04bf30b47c7" class="card-img-top" alt="Cartagena">
+                        <div class="card-body">
+                            <h5 class="card-title">Cartagena</h5>
+                            <p class="card-text">Playas caribeñas y joyas coloniales, donde la historia se mezcla con la brisa del mar en su centro amurallado.</p>
+                            <a href="pagos.html?destino=cartagena" class="btn btn-sm btn-outline-primary">Ver más <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card destination-card h-100 shadow-sm">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/24/88/76/decameron-aquarium.jpg?w=600&h=400&s=1" class="card-img-top" alt="San Andres">
+                        <div class="card-body">
+                            <h5 class="card-title">San Andres</h5>
+                            <p class="card-text">Paraíso de aguas cristalinas y cultura isleña, con arrecifes vibrantes y el famoso mar de siete colores.</p>
+                            <a href="pagos.html?destino=san-andres" class="btn btn-sm btn-outline-primary">Ver más <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card destination-card h-100 shadow-sm">
+                        <img src="https://forbes.co/_next/image?url=https%3A%2F%2Fcdn.forbes.co%2F2020%2F09%2FMedell%C3%ADn-foto-ProColombia.jpg&w=3840&q=75" class="card-img-top" alt="Medellin">
+                        <div class="card-body">
+                            <h5 class="card-title">Medellín</h5>
+                            <p class="card-text">La ciudad de la eterna primavera, reconocida por su transformación urbana y su innovador sistema de transporte público.</p>
+                            <a href="pagos.html?destino=medellin" class="btn btn-sm btn-outline-primary">Ver más <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+<div>
+    <p></p>
+</div>
+                <div class="col-md-4">
+                    <div class="card destination-card h-100 shadow-sm">
+                        <img src="https://denomades-blog.imgix.net/blog/wp-content/uploads/2023/11/27150312/granvia.jpg?auto=compress%2Cformat&ixlib=php-3.3.1" class="card-img-top" alt="Madrid">
+                        <div class="card-body">
+                            <h5 class="card-title">Madrid</h5>
+                            <p class="card-text">Capital vibrante donde el arte, la gastronomía y la vida nocturna se unen en calles llenas de historia.</p>
+                            <a href="pagos.html?destino=madrid" class="btn btn-sm btn-outline-primary">Ver más <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card destination-card h-100 shadow-sm">
+                        <img src="https://www.travel-guide.es/media/new-york.jpeg" class="card-img-top" alt="Nueva York">
+                        <div class="card-body">
+                            <h5 class="card-title">Nueva York</h5>
+                            <p class="card-text">La ciudad que nunca duerme, con rascacielos icónicos, Broadway y una mezcla cultural única.</p>
+                            <a href="pagos.html?destino=nueva-york" class="btn btn-sm btn-outline-primary">Ver más <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card destination-card h-100 shadow-sm">
+                        <img src="https://www.economy.com.bo/asset/thumbnail,992,558,center,center/media/economy/images/2022/09/27/2022092716155612569.jpg" class="card-img-top" alt="Cancún">
+                        <div class="card-body">
+                            <h5 class="card-title">Cancún</h5>
+                            <p class="card-text">Arena blanca y aguas turquesa, ideal para aventuras acuáticas y noches llenas de energía.</p>
+                            <a href="pagos.html?destino=cancun" class="btn btn-sm btn-outline-primary">Ver más <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+  <!--Boton del final-->
+            <div class="all-options">
+                <button>Ver todas las opciones <span class="plus">+</span></button>
+              </div>            
+        </section>
+
+        <!-- CORREO -->
+        <section class="mb-5 p-5 bg-light rounded shadow-sm text-center">
+            <h2 class="h3 mb-3">¡Ofertas exclusivas en tu email!</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Tu correo electrónico" aria-label="Email">
+                        <button class="btn btn-primary" type="button">Recibir Ofertas</button>
+                        <p class="recibiras small text-center mt-3 mx-auto">Recibirás emails promocionales de Exploravia para que viajes por el mundo</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="fw-bold mb-3">Exploravia</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Crear Cuenta</a></li>
+                        <li class="mb-2"><a href="#">Mi Cuenta</a></li>
+                        <li class="mb-2"><a href="#">Mis Viajes</a></li>
+                        <li class="mb-2"><a href="#">Mi Perfil</a></li>
+                        <li class="mb-2"><a href="#">Eliminar mi cuenta</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="fw-bold mb-3">Sobre Nosotros</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Confianza en tus compras</a></li>
+                        <li class="mb-2"><a href="#">Términos y condiciones</a></li>
+                        <li class="mb-2"><a href="#">Política de privacidad</a></li>
+                        <li class="mb-2"><a href="#">Promociones vigentes</a></li>
+                        <li class="mb-2"><a href="#">Condiciones IVA</a></li>
+                        <li class="mb-2"><a href="#">Black Friday</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-3">Información Adicional</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="#">Potencia tu negocio</a></li>
+                        <li class="mb-2"><a href="#">Agrega tu flota</a></li>
+                        <li class="mb-2"><a href="#">Programa de Agencias</a></li>
+                        <li class="mb-2"><a href="#">Afiliadas</a></li>
+                        <li class="mb-2"><a href="#">Anuncia tu propiedad</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold mb-3">Contactanos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Calle 12 3456, Bogotá</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +57 601 456 7890</li>
+                        <li class="mb-2"><i class="fab fa-whatsapp me-2"></i>+57 300 456 7890</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@exploravia.com.co</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.2);">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">Exploravia &copy; </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="#" class="text-black">Términos y Condiciones</a></li>
+                        <li class="list-inline-item mx-3">|</li>
+                        <li class="list-inline-item"><a href="#" class="text-black">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--LOGIN-->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-black">Correo electrónico</label>
+                            <input type="email" class="form-control" id="email" placeholder="Dirección de correo electronico" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label text-black">Contraseña</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Recordarme</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+                    </form>
+                    
+                    <div class="text-center">
+                        <p class="my-3">o</p>
+                        <div class="d-grid gap-2"style="max-width: 250px; margin: 0 auto;">
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fab fa-google me-4"></i>Continuar con google</button>
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fab fa-microsoft me-4"></i>Continuar con Microsoft</button>
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fab fa-apple me-4"></i>Continuar con Apple</button>
+                            <button class="btn btn-outline-primary text-transform-none d-flex align-items-center"><i class="fas fa-phone me-4"></i>Continuar con el Telefono</button> 
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="text-center">
+                        <p class="mb-0">¿No tienes una cuenta? <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal" data-bs-dismiss="modal">Regístrate</a></p>
+                        <p class="mt-2"><a href="#">¿Olvidaste tu contraseña?</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+
+//BOTON DE BUSQUEDA
+    document.querySelector('.search-button').addEventListener('click', function() {
+        const searchInput = document.querySelector('.search-input');
+        searchInput.classList.toggle('active');
+        
+        // Opcional: enfocar el campo cuando se activa
+        if (searchInput.classList.contains('active')) {
+            searchInput.focus();
+        }
+    });
+
+//FUNCIONAMIENTO DE LA CARTA DE VUELO 
+// Mostrar vuelo seleccionado al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+    const vueloGuardado = localStorage.getItem('vueloSeleccionado');
+    const contenedor = document.getElementById('mi-vuelo');
+    
+    if (vueloGuardado) {
+        const vuelo = JSON.parse(vueloGuardado);
+        const precioFormateado = new Intl.NumberFormat('es-CO', {
+            style: 'currency',
+            currency: 'COP'
+        }).format(vuelo.precio).replace(/,00$/, '');
+        
+        document.getElementById('vuelo-seleccionado-container').innerHTML = `
+            <div class="row">
+                <div class="col-md-8">
+                    <h5>${vuelo.aerolinea} - ${vuelo.ida.ruta} / ${vuelo.regreso.ruta}</h5>
+                    <p class="mb-2"><strong>Salida:</strong> ${vuelo.ida.fecha} a las ${vuelo.ida.hora}</p>
+                    <p class="mb-2"><strong>Regreso:</strong> ${vuelo.regreso.fecha} a las ${vuelo.regreso.hora}</p>
+                    ${vuelo.comentario ? `<div class="alert alert-warning mt-2 mb-0">${vuelo.comentario}</div>` : ''}
+                </div>
+                <div class="col-md-4 text-end">
+                    <p class="fs-4 fw-bold mb-0">${precioFormateado}</p>
+                    <button class="btn btn-sm btn-outline-danger mt-2" id="cancelar-vuelo">Cancelar</button>
+                </div>
+            </div>
+        `;
+        
+        contenedor.style.display = 'block';
+        
+        document.getElementById('cancelar-vuelo').addEventListener('click', function() {
+            localStorage.removeItem('vueloSeleccionado');
+            contenedor.style.display = 'none';
+        });
+    }
+});
+
+//LOGIN ADMINISTRADOR 
+document.querySelector('#loginModal form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (email === 'administrador@gmail.com' && password === '12345') {
+        localStorage.setItem('esAdmin', 'true');
+        alert('Bienvenido, Administrador');
+        window.location.href = 'pagina.html'; // O la página que corresponda
+    } else if(email === 'usuario@jj.com' && password === '12345') {
+        
+    }
+})
+
+//BOOSTRAP
+        $(document).ready(function() {
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
+            // Add smooth scrolling to all links
+            $("a").on('click', function(event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function(){
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
